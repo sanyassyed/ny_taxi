@@ -16,3 +16,8 @@
        conda activate .my_env
     ```
 * Updated `.gitignore` file
+
+## Starting development - Steps
+
+* Activate conda virtual env
+* 
