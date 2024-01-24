@@ -16,7 +16,8 @@
        conda activate .my_env
     ```
 * Updated `.gitignore` file
-
+* Packages installed
+    * pg
 ## Starting development - Steps
 
 * Activate conda virtual env
