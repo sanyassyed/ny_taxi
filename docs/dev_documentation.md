@@ -17,7 +17,12 @@
     ```
 * Updated `.gitignore` file
 * Packages installed
-    * pg
+    * pandas
+    * pyarrow
+    * `pip install pgcli`
+    * `pip install jupyter`
+    * `pip install ipykernel`-> if not already installed
+    * `pip install sqlalchemy`
 ## Starting development - Steps
 
 * Activate conda virtual env
