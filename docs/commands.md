@@ -17,3 +17,4 @@ postgres:13
 ## Linux
 * `ls -lah` -> to check the permissions for the folders
 * `sudo chown codespace:codespace db_data` -> to change the owner of the folder db_data
+* `jupyter notebook` -> to run jupyter notebook
