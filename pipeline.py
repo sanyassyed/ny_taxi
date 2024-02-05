@@ -3,6 +3,7 @@ import pandas as pd
 import os
 from sqlalchemy import create_engine
 from time import time
+import argparse
 
 def con_open(host, username, pwd, port, db_name):
     """
@@ -98,7 +99,7 @@ def del_download(f_loc):
     os.remove(f_loc)
     print(f'File deletion from {f_loc} complete')
 
-def main(taxi_color='green', year=2019, month=9)->None:
+def main(params)->None:
     """
     Main function that calls the ETL functions
     Args:
@@ -108,7 +109,15 @@ def main(taxi_color='green', year=2019, month=9)->None:
     Returns:
         None
     """
-    host, username, pwd, port, db_name = 'localhost', 'codespace', 'root', 5432, 'ny_taxi'
+    username = params.user
+    pwd = params.password
+    host = params.host
+    port = params.port
+    db_name = params.db
+    taxi_color=params.taxi_color
+    year=int(params.year)
+    month=int(params.month)
+    
     url =f'https://d37ci6vzurychx.cloudfront.net/trip-data/{taxi_color}_tripdata_{year}-{month:02d}.parquet'
     f_loc = extract(url)
     print('Data Extraction Complete')
@@ -120,4 +129,19 @@ def main(taxi_color='green', year=2019, month=9)->None:
         del_download(f_loc)
 
 if __name__=="__main__":
-    main()
+    parser = argparse.ArgumentParser(description='Ingest CSV data to Postgres')
+
+    parser.add_argument('--user', required=True, help='user name for Postgres')
+    parser.add_argument('--password', required=True, help='password for Postgres')
+    parser.add_argument('--host', required=True, help='host name for Postgres')
+    parser.add_argument('--port', required=True, help='port for Postgres')
+    parser.add_argument('--db', required=True, help='database name for Postgres')
+    parser.add_argument('--taxi_color', required=True, help='color of the taxi data to extract')
+    parser.add_argument('--year', required=True, help='year of taxi data to extract')
+    parser.add_argument('--month', required=True, help='month of taxi data to extract')
+
+    args = parser.parse_args()
+
+    main(args)
+
+    # python pipeline.py --user codespace --password root --host localhost --port 5432 --db ny_taxi --taxi_color yellow --year 2021 --month 9
